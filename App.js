@@ -18,16 +18,16 @@ import {
   View,
 } from 'react-native';
 import {Provider} from 'react-redux';
-import MainRoutes from './src/navigation/mainRoutes';
+import BottomTabs from './src/navigation/mainRoutes';
 import {store} from './src/redux/store';
 
 const App = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Provider store={store}>
-        <MainRoutes />
+        <BottomTabs />
       </Provider>
-    </View>
+    </SafeAreaView>
   );
 };
 

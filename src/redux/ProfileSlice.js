@@ -6,30 +6,29 @@ const URL =
   'http://dev.justicepoker.com/api/v1/gameplay/available-game-table-category/?game_table_tag=2';
 
 export const getTableData = createAsyncThunk(
-  //Slice name/function name
   'profile/getTableData',
   async (data, thunkAPI) => {
-    //makeApiRequest is a common function to call api
     const response = await makeApiRequest()
-      .get(URL, TOKEN, {
-        headers: {Authorization: `Bearer ${TOKEN}`},
-      })
+      .get(
+        'http://dev.justicepoker.com/api/v1/gameplay/available-game-table-category/?game_table_tag=2',
+        {
+          headers: {Authorization: `Token ${TOKEN}`},
+        },
+      )
       .catch(error => {
         console.log(error, 'error in getTableData');
       });
 
     console.log(response.data, '>>>>>>');
-    if (response.data.success) {
-      return response.data.success;
-    }
+    return response.data;
   },
 );
 
 export const profileSlice = createSlice({
-  //name of this slice has to be unique and is used to call its variables in component
   name: 'Profile',
   initialState: {
     loadingToggle: false,
+    tableData: [],
   },
   reducers: {
     // setFeedbackStatus: (state, {payload}) => {
@@ -38,17 +37,16 @@ export const profileSlice = createSlice({
     //state update function without api call can be called here
   },
   extraReducers: {
-    //.fullfilled runs when the api call is successful
-    // [getProfileDetail.fulfilled]: (state, {payload}) => {
-    //   state.loadingToggle = false;
-    //   state.profileDetail = payload;
-    // },
-    // [getProfileDetail.pending]: (state, {payload}) => {
-    //   state.loadingToggle = true;
-    // },
-    // [getProfileDetail.rejected]: (state, {payload}) => {
-    //   state.loadingToggle = false;
-    // },
+    [getTableData.fulfilled]: (state, {payload}) => {
+      state.loadingToggle = false;
+      state.tableData = payload;
+    },
+    [getTableData.pending]: (state, {payload}) => {
+      state.loadingToggle = true;
+    },
+    [getTableData.rejected]: (state, {payload}) => {
+      state.loadingToggle = false;
+    },
   },
 });
 export const {} = profileSlice.actions;

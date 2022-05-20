@@ -1,14 +1,10 @@
-// 1. Developer Name(Who created the file) : Shahaab sabraiwala
-// 2. Developer Email ID(Who created the file) : shahaab@dotminds.in
-// 4. Date Created: 2nd march 2021
-// 7. Previous version developer name and Email ID :
-// 8. Previous version description :
-// 9. Current version developer name and Email ID : Shahaab sabraiwala shahaab@dotminds.in
-
 import React from 'react';
 import {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import Banner from '../components/Banner';
+import GameCard from '../components/GameCard';
+import Header from '../components/Header';
 import {getTableData} from '../redux/ProfileSlice';
 
 const ProfileScreen = () => {
@@ -17,15 +13,43 @@ const ProfileScreen = () => {
   useEffect(() => {
     dispatch(getTableData());
   }, []);
+  const {tableData} = useSelector(state => state.profile);
+  console.log(tableData, 'table data in screen');
   return (
     <View style={container}>
-      <Text>ProfileScreen</Text>
+      <Header title="Hey Shubham !" />
+      <View>
+        <FlatList
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={tableData}
+          renderItem={({item}) => (
+            <View>
+              <Banner />
+            </View>
+          )}
+        />
+      </View>
+      <View>
+        <FlatList
+          data={tableData}
+          renderItem={({item}) => (
+            <View>
+              <GameCard item={item} />
+            </View>
+          )}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    flex: 1,
+    backgroundColor: '#080808',
+  },
 });
 
 export default ProfileScreen;

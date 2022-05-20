@@ -2,6 +2,7 @@
 import axios from 'axios';
 const URL =
   'http://dev.justicepoker.com/api/v1/gameplay/available-game-table-category/?game_table_tag=2';
+const token = '';
 const makeApiRequest = () => {
   // let headers = {
   //     'Authorization': Authorization,
